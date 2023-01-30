@@ -17,7 +17,7 @@ const Login = () => {
       return alert("enter a full name");
     }
     auth
-      .createUserWithEmailAndPassword(email, Password)
+      .createUserWithEmailAndPassword(email, assword)
       .then((userAuth) => {
         userAuth.user
           .updateProfile({
