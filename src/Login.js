@@ -1,4 +1,3 @@
-import { Password } from "@mui/icons-material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "./features/userSlice";
@@ -8,21 +7,37 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [profile, setProfile] = useState("");
+  const [password, setPassword] = useState("");
+  const [profilePic] = useState("");
   const dispatch = useDispatch();
   const LoginToApp = (e) => {
     e.preventDefault();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userAuth) => {
+        dispatch(
+          login({
+            email: userAuth.user.email,
+            uid: userAuth.user.uid,
+            displayName: userAuth.user.displayName,
+            photoUrl: userAuth.user.photoURL,
+          })
+        );
+      })
+      .catch((err) => alert(err));
   };
+
   const register = () => {
     if (!name) {
       return alert("enter a full name");
     }
     auth
-      .createUserWithEmailAndPassword(email, assword)
+      .createUserWithEmailAndPassword(email, password)
       .then((userAuth) => {
         userAuth.user
           .updateProfile({
             displayName: name,
-            photoURL: profile,
+            photoURL: profilePic,
           })
           .then(() => {
             dispatch(
@@ -30,7 +45,7 @@ const Login = () => {
                 email: userAuth.user.email,
                 uid: userAuth.user.uid,
                 displayName: name,
-                photoURL: profile,
+                photoUrl: profilePic,
               })
             );
           });
@@ -59,7 +74,12 @@ const Login = () => {
           type="email"
           placeholder="Email"
         />
-        <input type="password" placeholder="Password" />
+        <input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          placeholder="Password"
+        />
         <button type="submit" onClick={LoginToApp}>
           Sign In
         </button>
