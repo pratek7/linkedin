@@ -7,7 +7,7 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import CalendarViewDayIcon from "@mui/icons-material/CalendarViewDay";
 import "./Feed.css";
-import { db } from "./Firebase";
+import db from "./Firebase";
 import firebase from "firebase/compat/app";
 import Post from "./Post";
 import { useSelector } from "react-redux";
